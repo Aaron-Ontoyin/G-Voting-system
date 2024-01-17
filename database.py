@@ -1,9 +1,14 @@
+import os
+
+import dotenv
 
 from sqlalchemy import Column, Integer, String, DateTime, Text, func, UniqueConstraint, create_engine
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+
+dotenv.load_dotenv()
 
 Base = declarative_base()
 
@@ -31,7 +36,7 @@ class Vote(Base):
             return False, "You already voted!"
 
 
-engine = create_engine('postgresql://postgres:postgres@localhost:5432/g_voting')
+engine = create_engine(os.getenv("DATABASE_URL"))
 
 Base.metadata.create_all(engine)
 
