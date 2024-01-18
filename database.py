@@ -31,7 +31,7 @@ class Vote(Base):
             session.add(new_vote)
             session.commit()
             return True, "Vote recorded successfully."
-        except IntegrityError:
+        except:
             session.rollback()
             return False, "You already voted!"
 
