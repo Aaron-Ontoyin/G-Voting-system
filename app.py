@@ -59,7 +59,9 @@ with st.spinner("Loading..."):
     Session = sessionmaker(bind=engine)
     session = Session()
 
-if staffID in [v.staff_id for v in session.query(Vote).all()]:
+if staffID == "admin00":
+    pass
+elif staffID in [v.staff_id for v in session.query(Vote).all()]:
     session.close()
     st.error(f"Access Denied! You have already voted!", icon="❌")
     st.stop()
