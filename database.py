@@ -35,8 +35,10 @@ class Vote(Base):
             session.rollback()
             return False, "You already voted!"
 
-
-engine = create_engine(os.getenv("DATABASE_URL"))
+uri = os.getenv("DATABASE_URL")
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+engine = create_engine(uri)
 
 Base.metadata.create_all(engine)
 
