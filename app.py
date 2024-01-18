@@ -36,7 +36,7 @@ if "other" not in st.session_state:
     st.session_state["other"] = []
 
 
-st.image(r"bg.webp", use_column_width=True)
+st.image(r"bg.webp", caption="GRIDCo Senior Staff Association", use_column_width=True)
 st.write("")
 
 valid_ids = pd.read_csv("staff_ids.csv")["Staffid"].astype(str).to_list()
