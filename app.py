@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd
 
-from database import Vote, session
+from database import Vote, engine
+from sqlalchemy.orm import sessionmaker
 
 
 st.set_page_config(page_title="Vote", page_icon=":tada:")
@@ -33,6 +34,12 @@ if "comments" not in st.session_state:
     st.session_state["comments"] = []
 if "other" not in st.session_state:
     st.session_state["other"] = []
+
+
+with st.spinner("Loading..."):
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
 
 valid_ids = pd.read_csv("staff_ids.csv")["Staffid"].astype(str).to_list()
 
@@ -124,3 +131,5 @@ if submit_button:
 
     else:
         st.warning(message)
+
+session.close()

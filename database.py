@@ -41,6 +41,3 @@ if uri.startswith("postgres://"):
 engine = create_engine(uri)
 
 Base.metadata.create_all(engine)
-
-Session = sessionmaker(bind=engine)
-session = Session()
