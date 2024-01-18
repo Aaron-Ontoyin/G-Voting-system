@@ -51,13 +51,16 @@ with content_placeholder.form(key="login_form"):
 staffID = st.session_state["staffID"]
 if staffID and staffID not in valid_ids:
     st.error(f"Access Denied! Invalid ID", icon="❌")
+    session.close()
     st.stop()
 
 if not staffID:
+    session.close()
     st.stop()
 
 if staffID in [v.staff_id for v in session.query(Vote).all()]:
     st.error(f"Access Denied! You have already voted!", icon="❌")
+    session.close()
     st.stop()
 
 content_placeholder.empty()
@@ -90,6 +93,7 @@ with placeholder_for_other:
 
 if selection == "Other (State it)" and otherOption == "":
     st.warning("Please enter your other option")
+    session.close()
     st.stop()
 
 if submit_button:
