@@ -60,8 +60,8 @@ with st.spinner("Loading..."):
     session = Session()
 
 if staffID in [v.staff_id for v in session.query(Vote).all()]:
-    st.error(f"Access Denied! You have already voted!", icon="❌")
     session.close()
+    st.error(f"Access Denied! You have already voted!", icon="❌")
     st.stop()
 
 content_placeholder.empty()
