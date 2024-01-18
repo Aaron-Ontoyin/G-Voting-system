@@ -85,6 +85,7 @@ with placeholder_for_radio_select:
             "Indifferent (whichever direction is fine with me).",
             "Other (State it)",
         ),
+        index=4,
     )
 
 with placeholder_for_other:
