@@ -37,7 +37,7 @@ if "other" not in st.session_state:
 
 
 st.image(r"bg.webp", use_column_width=True)
-st.markdown("""<h5>GRIDCo Senior Staff Association Digital Platform</h5>""", unsafe_allow_html=True)
+st.markdown("""<h5 style="text-align: center;">GRIDCo Senior Staff Association Digital Platform</h5>""", unsafe_allow_html=True)
 st.write()
 
 valid_ids = pd.read_csv("staff_ids.csv")["Staffid"].astype(str).to_list()
