@@ -36,11 +36,6 @@ if "other" not in st.session_state:
     st.session_state["other"] = []
 
 
-with st.spinner("Loading..."):
-    Session = sessionmaker(bind=engine)
-    session = Session()
-
-
 valid_ids = pd.read_csv("staff_ids.csv")["Staffid"].astype(str).to_list()
 
 content_placeholder = st.empty()
@@ -51,12 +46,14 @@ with content_placeholder.form(key="login_form"):
 staffID = st.session_state["staffID"]
 if staffID and staffID not in valid_ids:
     st.error(f"Access Denied! Invalid ID", icon="❌")
-    session.close()
     st.stop()
 
 if not staffID:
-    session.close()
     st.stop()
+
+with st.spinner("Loading..."):
+    Session = sessionmaker(bind=engine)
+    session = Session()
 
 if staffID in [v.staff_id for v in session.query(Vote).all()]:
     st.error(f"Access Denied! You have already voted!", icon="❌")
