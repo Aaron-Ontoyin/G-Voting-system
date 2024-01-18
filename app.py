@@ -56,10 +56,14 @@ try:
 
     if not staffID:
         st.stop()
-
-    if staffID in [v.staff_id for v in session.query(Vote).all()]:
-        st.error(f"Access Denied! You have already voted!", icon="❌")
-        st.stop()
+    
+    try:
+        if staffID in [v.staff_id for v in session.query(Vote).all()]:
+            st.error(f"Access Denied! You have already voted!", icon="❌")
+            st.stop()
+    except:
+        session.rollback()
+        st.error(f"Access Denied! Invalid ID", icon="❌")
 
     content_placeholder.empty()
     st.success(f"Access Granted!", icon="✅")
@@ -102,7 +106,11 @@ try:
             st.success(message)
 
             with st.spinner("Updating..."):
-                db_votes = session.query(Vote).all()
+                try:
+                    db_votes = session.query(Vote).all()
+                except:
+                    session.rollback()
+                    st.error("Failed to update results!")
 
                 st.session_state["comments"] = [v.comment for v in db_votes if v.comment]
                 st.session_state.votes = {
